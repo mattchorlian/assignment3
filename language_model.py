@@ -15,13 +15,13 @@ class LanguageModel(nn.Module):
 
         # Create an LSTM layer of rnn_size size. Use any features you wish.
         # We will be using batch_first convention
-        self.lstm = nn.LSTM(rnn_size, 256, num_layers)
+        self.lstm = nn.LSTM(rnn_size, 256, num_layers, batch_first = True)
         # LSTM layer does not add dropout to the last hidden output.
         # Add this if you wish.
-        self.dropout = nn.Dropout(p dropout)
+        self.dropout = nn.Dropout(p=dropout)
         # Use a dense layer to project the outputs of the RNN cell into logits of
         # the size of vocabulary (vocab_size).
-        self.output = nn.linear(rnn_size, vocab_size)
+        self.output = nn.Linear(256, vocab_size)
         
     def forward(self,x):
         embeds = self.embedding(x)
